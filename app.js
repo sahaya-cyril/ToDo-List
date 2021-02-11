@@ -11,11 +11,9 @@ app.get("/", function(res, res) {
     var today = new Date();
     var currentDay = today.getDay();
     var day = "";
-    var offday = "weekday";
 
     if (currentDay == 0) {
         day = "Sunday";
-        offday = "weekend";
     }
     else if (currentDay == 1){
         day = "Monday";
@@ -34,10 +32,9 @@ app.get("/", function(res, res) {
     }
     else {
         day == "Saturday";
-        offday == "weekend";
     }
 
-    res.render("list", {kindOfDay: day, weekDay: offday});
+    res.render("list", {kindOfDay: day});
 });
 
 app.listen("3000", function(req, res) {
