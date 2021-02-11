@@ -5,7 +5,11 @@ const bodyParser = require("body-parser");
 
 const app =  express();
 
+var items = [];
+
 app.set("view engine", "ejs");
+
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.get("/", function(res, res) {
     var today = new Date();
@@ -19,8 +23,15 @@ app.get("/", function(res, res) {
     var day = today.toLocaleDateString("en-US", options);
 
     res.render("list", {
-        kindOfDay: day
+        kindOfDay: day,
+        newListItems: items,
     });
+});
+
+app.post("/", function (req, res) {
+    items.push(req.body.newItem);
+
+    res.redirect("/");
 });
 
 app.listen("3000", function(req, res) {
