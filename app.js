@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const date = require(__dirname + "/date.js");
 
-const app =  express();
+const app = express();
 
 app.set("view engine", "ejs");
 
@@ -83,15 +83,24 @@ app.get("/:customListName", function(req, res) {
 });
 
 app.post("/", function (req, res) {
+    const day = date.getDate();
     const itemName = req.body.newItem;
+    const listName = req.body.list;
 
     const item = new Item({
         name: itemName
     });
 
-    item.save();
-
-    res.redirect("/");
+    if (listName === day){
+        item.save();
+        res.redirect("/");
+    } else {
+        List.findOne({name: listName}, function(err, foundList) {
+            foundList.items.push(item);
+            foundList.save();
+            res.redirect("/" + listName);
+        });
+    }
 });
 
 app.post("/delete", function(req, res) {
