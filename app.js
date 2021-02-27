@@ -8,6 +8,7 @@ const _ = require("lodash");
 const app = express();
 
 app.set('view engine', 'ejs');
+mongoose.set('useFindAndModify', false);
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
